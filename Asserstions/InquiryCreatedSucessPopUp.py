@@ -1,4 +1,4 @@
-from TestCases.test_TC001_InquiryCreationUAECB import test_CreateInquiryUAECB
+from TestCases.test_TC001_AInquiryCreationUAECB import test_CreateInquiryUAECB
 from TestCases.test_TC001_BiddingProcessForUAECB import test_MobileLogin
 
 def test_MasterFlow():

@@ -19,7 +19,7 @@ class InquiryCreationlocaters:
         self.Commodity = '//input[@id="commodityType"]'
         self.Weight = '//input[@id="weightPerTruck"]'
         self.InquiryRecived_Calender = '//input[@id="inquiryReceivedDateTime"]'
-        self.InquryRecived_Dateandtime = '//td[@title="2025-10-13"]'
+        self.InquryRecived_Dateandtime = '//td[@title="2025-11-02"]'
         self.OK = '//span[text()="OK"]'
         self.Source = '//input[@id="inquirySource"]'
         self.From_City = '//input[@id="city_0"]'
@@ -27,12 +27,12 @@ class InquiryCreationlocaters:
         self.To_City = '//input[@id="city_1"]'
         self.DestAddress = '(//input[@placeholder="Search Places..."])[2]'
         self.MoveDateCalender = '//input[@id="fromDate_0"]'
-        self.MoveDateandTime = '(//td[@title="2025-10-27"])[2]'
+        self.MoveDateandTime = '(//td[@title="2025-11-27"])[2]'
         self.MoveDateandTimeOK = '(//span[text()="OK"])[2]'
         self.NoTruck = '//input[@id="count_0"]'
         self.RatePerTruck = '//input[@id="ratePerUnit_0"]'
         self.Submit = '//span[text()="Submit"]'
-        self.Success = '//p[@class="supplier-text"]'
+        self.Success = '//a[@class="inquiry-number"]/span'
 
     # ---------- Actions ----------
     def CreateInquirDownArrow(self):
@@ -147,6 +147,18 @@ class InquiryCreationlocaters:
         except Exception as e:
             print(f"❌ Failed to get success popup: {e}")
             return ""
+
+    def Get_Inquiry_Number(self):
+        try:
+            # ✅ Modify selector based on your UI HTML
+            inquiry_element = self.page.locator("//a[@class='inquiry-number']/span")
+            self.page.wait_for_timeout(2000)
+            inquiry_text = inquiry_element.inner_text().strip()
+            print(f"📦 Extracted Inquiry Number: {inquiry_text}")
+            return inquiry_text
+        except Exception:
+            print("⚠️ Inquiry number not found in popup.")
+            return None
 
     @pytest.fixture(params=CreateinquiryExecutionData.getTestdata("CreateInquiryData"))
     def getdata(request):

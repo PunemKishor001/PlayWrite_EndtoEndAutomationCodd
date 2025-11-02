@@ -1,6 +1,9 @@
+import time
+from re import search
+
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
-
+from Asserstions.InquiryNumberSearch import InquirySearch
 
 class BiddingToOrder:
 
@@ -17,6 +20,12 @@ class BiddingToOrder:
     OTP = (By.ID,"com.trukkeruae.trukker_vender:id/otpView")
     OTP_CONtinue = (By.ID,"com.trukkeruae.trukker_vender:id/btContinue")
     App_Permissions = (By.ID,"com.android.permissioncontroller:id/permission_allow_button")
+    Live_Loads = ("id", "com.trukkeruae.trukker_vender:id/nav_loads")
+    BidNow = ("id","com.trukkeruae.trukker_vender:id/btnBid")
+    HowMayTruck = ("id","com.trukkeruae.trukker_vender:id/btnIncreaseTruck")
+    Enter_Amount = ("id","com.trukkeruae.trukker_vender:id/etBidPrice")
+    SubMit_Button = ("id","com.trukkeruae.trukker_vender:id/btSubmit")
+    Bid_Continue =("id","com.trukkeruae.trukker_vender:id/btContinueBidOutRange")
 
     def App_Permission(self):
         PerMission_Button = self.driver.find_element(*BiddingToOrder.Permissions)
@@ -40,7 +49,7 @@ class BiddingToOrder:
 
     def MobileNumber(self):
         Mobile_Number = self.driver.find_element(*BiddingToOrder.Number)
-        Mobile_Number.send_keys("568965355")
+        Mobile_Number.send_keys("571235732")
         return Mobile_Number
 
     def ContinueButton(self):
@@ -62,3 +71,48 @@ class BiddingToOrder:
         AppPermission = self.driver.find_element(*BiddingToOrder.App_Permissions)
         AppPermission.click()
         return AppPermission
+
+    def LiveLoad(self):
+        LivesLoads = self.driver.find_element(*BiddingToOrder.Live_Loads)
+        LivesLoads.click()
+        return LivesLoads
+
+    def Search_Inquiry(self,inquiry_number):
+        print(f"🔍 Starting inquiry search for: {inquiry_number}")
+        Inq_Search = InquirySearch(self.driver)
+        Inq_Search.search_and_bid(inquiry_number)
+
+    def Bid_Now(self):
+        print("🚛 Starting bid...")
+
+        try:
+            # Click Bid Now only
+            self.driver.find_element(*BiddingToOrder.BidNow).click()
+            time.sleep(1)
+
+            print("✅ Bid Now button clicked")
+
+        except Exception as e:
+            print(f"❌ Error clicking Bid Now: {e}")
+            raise e
+
+
+    def HowMany_truck(self):
+        HowManysTrucks = self.driver.find_element(*BiddingToOrder.HowMayTruck)
+        HowManysTrucks.click()
+        return HowManysTrucks
+
+    def EntersAmoutn(self):
+        Enters_Amount = self.driver.find_element(*BiddingToOrder.Enter_Amount)
+        Enters_Amount.send_keys("30")
+        return Enters_Amount
+
+    def SubMit(self):
+        SubMitButton = self.driver.find_element(*BiddingToOrder.SubMit_Button)
+        SubMitButton.click()
+        return SubMitButton
+
+    def BidContinues_Button(self):
+        ContinuesBid_Button = self.driver.find_element(*BiddingToOrder.Bid_Continue)
+        ContinuesBid_Button.click()
+        return ContinuesBid_Button
